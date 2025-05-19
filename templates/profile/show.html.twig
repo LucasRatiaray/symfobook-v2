@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Mon Profil</h1>
+        
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                Informations personnelles
+            </div>
+            <div class="card-body">
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Compte vérifié :</strong> {{ user.isVerified ? 'Oui' : 'Non' }}</p>
+                <p><strong>Rôles :</strong> 
+                    {% for role in user.roles %}
+                        {% if role != 'ROLE_USER' %}
+                            {{ role }}{% if not loop.last %}, {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        
+        <a href="{{ path('app_profile_edit') }}" class="btn btn-primary">Modifier mon profil</a>
+    </div>
+{% endblock %}
