@@ -89,6 +89,33 @@
             {% else %}
                 <p>No discussions yet. Be the first to start a discussion about this book!</p>
             {% endif %}
+            
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Start a new discussion</h5>
+                </div>
+                <div class="card-body">
+                    {% if app.user %}
+                        {% if not is_granted('ROLE_BANNED') %}
+                            {{ form_start(discussionForm) }}
+                                {{ form_widget(discussionForm) }}
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            {{ form_end(discussionForm) }}
+                        {% else %}
+                            <div class="alert alert-warning">
+                                You are banned and cannot participate in discussions.
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="alert alert-info">
+                            Please <a href="{{ path('app_login') }}">log in</a> to start a discussion.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
             <div class="mt-3">
                 <a href="{{ path('app_book_index') }}" class="btn btn-secondary">Back to list</a>
             </div>

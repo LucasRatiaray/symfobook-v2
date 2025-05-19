@@ -82,11 +82,29 @@
                     <p>No comments yet. Be the first to comment!</p>
                 {% endif %}
 
-                {# Form pour ajouter un commentaire (à implémenter plus tard) #}
                 <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Add a Comment</h5>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Add a comment</h5>
-                        <p class="card-text text-muted">Login to comment</p>
+                        {% if app.user %}
+                            {% if not is_granted('ROLE_BANNED') %}
+                                {{ form_start(commentForm) }}
+                                    {{ form_widget(commentForm) }}
+                                    <div class="mt-3">
+                                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                                    </div>
+                                {{ form_end(commentForm) }}
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    You are banned and cannot add comments.
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="alert alert-info">
+                                Please <a href="{{ path('app_login') }}">log in</a> to add a comment.
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
