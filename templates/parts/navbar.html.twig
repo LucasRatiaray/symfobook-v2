@@ -36,9 +36,9 @@
 	<div class="navbar-end flex gap-2">
         <a>Login</a>
 		{# {% if app.user %}
-			{% if 'ROLE_ADMIN' in app.user.roles %}
+			{% if 'ROLE_ADMIN' in app.user.roles %} #}
 				<a href="{{ path('app_admin') }}" class="btn btn-success">Dashboard</a>
-			{% elseif 'ROLE_USER' in app.user.roles %}
+			{# {% elseif 'ROLE_USER' in app.user.roles %}
 				<a href="{{ path('app_profile_show') }}" class="btn btn-primary">Profile</a>
 			{% endif %}
 			<a href="{{ path('app_logout') }}" class="btn btn-warning">Logout</a>

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+<div role="tablist" class="tabs tabs-box">
+    <a role="tab" href="{{ path('app_admin_book_index') }}" class="tab {% if app.request.get('_route') starts with 'app_admin_book' %}tab-active{% endif %}">Books</a>
+    <a role="tab" href="{{ path('app_admin_author_index') }}" class="tab {% if app.request.get('_route') starts with 'app_admin_author' %}tab-active{% endif %}">Authors</a>
+    <a role="tab" href="{{ path('app_admin_genre_index') }}" class="tab {% if app.request.get('_route') starts with 'app_admin_genre' %}tab-active{% endif %}">Genres</a>
+    <a role="tab" href="{{ path('app_admin_discussion_index') }}" class="tab {% if app.request.get('_route') starts with 'app_admin_discussion' %}tab-active{% endif %}">Discussions</a>
+    <a role="tab" href="{{ path('app_admin_user_index') }}" class="tab {% if app.request.get('_route') starts with 'app_admin_user' %}tab-active{% endif %}">Users</a>
+</div>
+
+{% block content %}{% endblock %}
+{% endblock %}

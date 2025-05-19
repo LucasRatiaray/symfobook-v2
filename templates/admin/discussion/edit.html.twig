@@ -1,0 +1,13 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Edit Discussion{% endblock %}
+
+{% block content %}
+    <h1>Edit Discussion</h1>
+
+    {{ include('admin/discussion/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_discussion_index') }}">back to list</a>
+
+    {{ include('admin/discussion/_delete_form.html.twig') }}
+{% endblock %}
