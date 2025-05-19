@@ -1,56 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book index{% endblock %}
+{% block title %}Book index
+{% endblock %}
 
 {% block body %}
-    <h1>Book index</h1>
+	<h1 class="mt-4 text-xl font-semibold">Books</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genres</th>
-                <th>Description</th>
-                <th>CoverImage</th>
-                <th>PageCount</th>
-                <th>PublishedAt</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for book in books %}
-            <tr>
-                <td>{{ book.title }}</td>
-                <td>
-                    {% if book.author %}
-                        {{ book.author.firstName }} {{ book.author.lastName }}
-                    {% else %}
-                        Unknown
-                    {% endif %}
-                </td>
-                <td>
-                    {% if book.genres %}
-                        {% for genre in book.genres %}
-                            <span class="badge bg-primary">{{ genre.name }}</span>
-                        {% endfor %}
-                    {% else %}
-                        No genres
-                    {% endif %}
-                </td>
-                <td>{{ book.description|length > 50 ? book.description|slice(0, 50) ~ '...' : book.description }}</td>
-                <td>{{ book.coverImage }}</td>
-                <td>{{ book.pageCount }}</td>
-                <td>{{ book.publishedAt ? book.publishedAt|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-sm btn-info">View</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<div class="grid grid-cols-3 gap-4 py-4">
+		{% for book in books %}
+			<div class="card bg-base-100 w-96 shadow-sm">
+				<figure>
+					<img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes"/>
+				</figure>
+				<div class="card-body">
+					<h2 class="card-title">
+						{{ book.title }}
+						<div class="badge badge-secondary">
+							{% for genre in book.genres %}
+								{{ genre.name }}
+								{% if not loop.last %},
+								{% endif %}
+							{% endfor %}
+						</div>
+					</h2>
+					<p>{{ book.description|length > 70 ? book.description|slice(0, 70) ~ '...' : book.description }}</p>
+					<div class="card-actions justify-end">
+						<div class="badge badge-primary">
+							{% if book.author %}
+								{{ book.author.firstName }}
+								{{ book.author.lastName }}
+							{% else %}
+								Unknown
+							{% endif %}
+						</div>
+						<div class="badge badge-outline">{{ book.publishedAt ? book.publishedAt|date('Y-m-d') : '' }}</div>
+					</div>
+					<a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-sm btn-info mt-2">View</a>
+				</div>
+			</div>
+		{% else %}
+			<div class="col-span-3 text-center">no records found</div>
+		{% endfor %}
+	</div>
 {% endblock %}

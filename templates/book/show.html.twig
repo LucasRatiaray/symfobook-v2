@@ -1,124 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book: {{ book.title }}{% endblock %}
+{% block title %}Book:
+	{{ book.title }}
+{% endblock %}
 
 {% block body %}
-    <h1>{{ book.title }}</h1>
+	<div class="row">
+		<div class="col-md-8">
+			<div class="">
+				<div class="hero-content flex-col lg:flex-row">
+					<img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp" class="max-w-sm rounded-lg shadow-2xl"/>
+					<div>
+						<h1 class="text-5xl font-bold">{{ book.title }}</h1>
+						<div class="py-6">
+							<dl class="row">
+								<dd class="col-sm-9">
+									<div class="badge badge-secondary">
+										{% for genre in book.genres %}
+											{{ genre.name }}
+											{% if not loop.last %},
+											{% endif %}
+										{% endfor %}
+									</div>
+								</dd>
+								<dd class="col-sm-9 my-4">{{ book.description }}</dd>
+								<div class="card-actions justify-end">
+									<div class="badge badge-primary">{{ book.author.firstName }}
+										{{ book.author.lastName }}</div>
+									<div class="badge badge-outline">{{ book.publishedAt|date('Y-m-d') }}</div>
+									<div class="badge badge-outline">Page Count : {{ book.pageCount }}</div>
+								</div>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
 
-    <div class="row">
-        <div class="col-md-4">
-            {% if book.coverImage %}
-                <img src="{{ asset('uploads/covers/' ~ book.coverImage) }}" alt="{{ book.title }}" class="img-fluid">
-            {% else %}
-                <div class="bg-light p-5 text-center">No cover image</div>
-            {% endif %}
-        </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Book Details</h5>
-                    
-                    <dl class="row">
-                        <dt class="col-sm-3">Author</dt>
-                        <dd class="col-sm-9">
-                            {% if book.author %}
-                                {{ book.author.firstName }} {{ book.author.lastName }}
-                                {% if book.author.nationality %}
-                                    <span class="text-muted">({{ book.author.nationality }})</span>
-                                {% endif %}
-                            {% else %}
-                                Unknown
-                            {% endif %}
-                        </dd>
-                        
-                        <dt class="col-sm-3">Genres</dt>
-                        <dd class="col-sm-9">
-                            {% if book.genres|length > 0 %}
-                                {% for genre in book.genres %}
-                                    <span class="badge bg-primary">{{ genre.name }}</span>
-                                {% endfor %}
-                            {% else %}
-                                No genres assigned
-                            {% endif %}
-                        </dd>
-                        
-                        <dt class="col-sm-3">Description</dt>
-                        <dd class="col-sm-9">{{ book.description }}</dd>
-                        
-                        <dt class="col-sm-3">Page Count</dt>
-                        <dd class="col-sm-9">{{ book.pageCount }}</dd>
-                        
-                        <dt class="col-sm-3">Published</dt>
-                        <dd class="col-sm-9">{{ book.publishedAt ? book.publishedAt|date('Y-m-d') : 'Unknown' }}</dd>
-                    </dl>
-                </div>
-            </div>
-            
             <h3 class="mt-4">Discussions</h3>
             {% if book.discussions|length > 0 %}
-                <div class="list-group">
+                <ul class="list bg-base-100 rounded-box shadow-md">
+                    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Latest discussions about this book</li>
                     {% for discussion in book.discussions %}
-                        <a href="{{ path('app_discussion_show', {'id': discussion.id}) }}" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ discussion.title }}</h5>
-                                <small>{{ discussion.createdAt ? discussion.createdAt|date('Y-m-d') : '' }}</small>
+                        <li class="list-row flex gap-4 items-start py-4">
+                            <div>
+                                <img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/>
                             </div>
-                            <p class="mb-1">{{ discussion.content|length > 100 ? discussion.content|slice(0, 100) ~ '...' : discussion.content }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small>{{ discussion.comments|length }} comments</small>
-                                {% if discussion.user is defined and discussion.user %}
-                                    <div>
-                                        <small class="text-muted">By {{ discussion.user.firstName }} {{ discussion.user.lastName }}</small>
-                                        {% if discussion.user.roles is defined %}
-                                            {% if 'ROLE_ADMIN' in discussion.user.roles %}
-                                                <span class="badge bg-danger ms-1">Admin</span>
-                                            {% elseif 'ROLE_BANNED' in discussion.user.roles %}
-                                                <span class="badge bg-warning ms-1">Banned</span>
-                                            {% else %}
-                                                <span class="badge bg-secondary ms-1">User</span>
-                                            {% endif %}
-                                        {% endif %}
-                                    </div>
-                                {% else %}
-                                    <small class="text-muted">By Unknown user</small>
-                                {% endif %}
+                            <div class="flex-1">
+                                <div class="font-semibold">
+                                    {{ discussion.user is defined and discussion.user ? discussion.user.firstName ~ ' ' ~ discussion.user.lastName : 'Unknown user' }}
+                                </div>
+                                <div class="text-xs uppercase font-semibold opacity-60">{{ discussion.title }}</div>
+                                <p class="list-col-wrap text-xs mt-1">
+                                    {{ discussion.content|length > 100 ? discussion.content|slice(0, 100) ~ '...' : discussion.content }}
+                                </p>
+                                <div class="flex gap-4 items-center mt-2">
+                                    <small class="opacity-60">{{ discussion.comments|length }} comments</small>
+                                    <small class="opacity-60">{{ discussion.createdAt ? discussion.createdAt|date('Y-m-d') : '' }}</small>
+                                </div>
                             </div>
-                        </a>
+                            <div class="flex flex-col gap-2">
+                                <a href="{{ path('app_discussion_show', {'id': discussion.id}) }}" class="btn btn-square btn-ghost" title="View">
+                                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
+                                </a>
+                            </div>
+                        </li>
                     {% endfor %}
-                </div>
+                </ul>
             {% else %}
                 <p>No discussions yet. Be the first to start a discussion about this book!</p>
             {% endif %}
-            
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Start a new discussion</h5>
-                </div>
-                <div class="card-body">
-                    {% if app.user %}
-                        {% if not is_granted('ROLE_BANNED') %}
-                            {{ form_start(discussionForm) }}
-                                {{ form_widget(discussionForm) }}
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            {{ form_end(discussionForm) }}
-                        {% else %}
-                            <div class="alert alert-warning">
-                                You are banned and cannot participate in discussions.
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        <div class="alert alert-info">
-                            Please <a href="{{ path('app_login') }}">log in</a> to start a discussion.
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            
-            <div class="mt-3">
-                <a href="{{ path('app_book_index') }}" class="btn btn-secondary">Back to list</a>
-            </div>
-        </div>
-    </div>
+
+			<div class="card mt-4">
+				<div class="card-header">
+					<h5 class="mb-0">Start a new discussion</h5>
+				</div>
+				<div class="card-body">
+					{% if app.user %}
+						{% if not is_granted('ROLE_BANNED') %}
+							{{ form_start(discussionForm) }}
+							{{ form_widget(discussionForm) }}
+							<div class="mt-3">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+							{{ form_end(discussionForm) }}
+						{% else %}
+							<div class="alert alert-warning">
+								You are banned and cannot participate in discussions.
+							</div>
+						{% endif %}
+					{% else %}
+						<div class="alert alert-info">
+							Please
+							<a href="{{ path('app_login') }}">log in</a>
+							to start a discussion.
+						</div>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="mt-3">
+				<a href="{{ path('app_book_index') }}" class="btn btn-secondary">Back to list</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

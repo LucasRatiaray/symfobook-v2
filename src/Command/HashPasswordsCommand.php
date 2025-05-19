@@ -38,7 +38,7 @@ class HashPasswordsCommand extends Command
             if ($user->getPassword() === 'plainpassword') {
                 $hashedPassword = $this->passwordHasher->hashPassword(
                     $user,
-                    'admin123'  // Mot de passe désiré
+                    'admin123'
                 );
                 $user->setPassword($hashedPassword);
                 $count++;
