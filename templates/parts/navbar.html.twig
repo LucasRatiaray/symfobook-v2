@@ -11,29 +11,25 @@
 					<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-neutral-content' : '' }}">Home</a>
 				</li>
 				<li>
-                    <a>Books</a>
-					{# <a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book' ? 'bg-neutral-content' : '' }}">Books</a> #}
+					<a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book_index' ? 'bg-neutral-content' : '' }}">Books</a>
 				</li>
 				<li>
-                    <a>Discussions</a>
-					{# <a href="{{ path('app_discussion') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion' ? 'bg-neutral-content' : '' }}">Discussions</a> #}
+					<a href="{{ path('app_discussion_index') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion_index' ? 'bg-neutral-content' : '' }}">Discussions</a>
 				</li>
 			</ul>
 		</div>
 		<a href="{{ path('app_home') }}" class="btn btn-ghost text-xl">symfoBook</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
-		<ul class="menu menu-horizontal px-1">
+		<ul class="menu menu-horizontal px-1 space-x-2">
 			<li>
 				<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-neutral-content' : '' }}">Home</a>
 			</li>
 			<li>
-                <a>Books</a>
-				{# <a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book' ? 'bg-neutral-content' : '' }}">Books</a> #}
+				<a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book_index' ? 'bg-neutral-content' : '' }}">Books</a>
 			</li>
 			<li>
-                <a>Discussions</a>
-				{# <a href="{{ path('app_discussion') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion' ? 'bg-neutral-content' : '' }}">Discussions</a> #}
+				<a href="{{ path('app_discussion_index') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion_index' ? 'bg-neutral-content' : '' }}">Discussions</a>
 			</li>
 		</ul>
 	</div>

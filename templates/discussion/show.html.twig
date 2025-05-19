@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discussion: {{ discussion.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1>{{ discussion.title }}</h1>
+                <p class="text-muted">
+                    {% if discussion.user %}
+                        Started by <strong>{{ discussion.user.firstName }} {{ discussion.user.lastName }}</strong>
+                    {% else %}
+                        Started by Unknown User
+                    {% endif %}
+                    on {{ discussion.createdAt ? discussion.createdAt|date('Y-m-d') : '' }}
+                    {% if discussion.updatedAt %}
+                        | Updated on {{ discussion.updatedAt|date('Y-m-d') }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="{{ path('app_discussion_index') }}" class="btn btn-secondary">Back to list</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Discussion</h5>
+                        <span class="badge bg-secondary">
+                            {% if discussion.user %}
+                                {{ discussion.user.email }}
+                                {% if 'ROLE_ADMIN' in discussion.user.roles %}
+                                    <span class="badge bg-danger ms-1">Admin</span>
+                                {% elseif 'ROLE_BANNED' in discussion.user.roles %}
+                                    <span class="badge bg-warning ms-1">Banned</span>
+                                {% endif %}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ discussion.content|nl2br }}</p>
+                    </div>
+                </div>
+
+                <h3>Comments ({{ discussion.comments|length }})</h3>
+                {% if discussion.comments|length > 0 %}
+                    <div class="comments-section">
+                        {% for comment in discussion.comments %}
+                            <div class="card mb-3">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        {% if comment.user %}
+                                            {{ comment.user.firstName }} {{ comment.user.lastName }}
+                                        {% else %}
+                                            Unknown User
+                                        {% endif %}
+                                    </h6>
+                                    <span class="badge bg-secondary">
+                                        {% if comment.user %}
+                                            {{ comment.user.email }}
+                                            {% if 'ROLE_ADMIN' in comment.user.roles %}
+                                                <span class="badge bg-danger ms-1">Admin</span>
+                                            {% elseif 'ROLE_BANNED' in comment.user.roles %}
+                                                <span class="badge bg-warning ms-1">Banned</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">{{ comment.content|nl2br }}</p>
+                                    <div class="text-muted small">
+                                        Posted on {{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i') : '' }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No comments yet. Be the first to comment!</p>
+                {% endif %}
+
+                {# Form pour ajouter un commentaire (à implémenter plus tard) #}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Add a comment</h5>
+                        <p class="card-text text-muted">Login to comment</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">About the Book</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if discussion.book %}
+                            <h4>
+                                <a href="{{ path('app_book_show', {'id': discussion.book.id}) }}">
+                                    {{ discussion.book.title }}
+                                </a>
+                            </h4>
+                            
+                            {% if discussion.book.coverImage %}
+                                <img src="{{ asset('uploads/covers/' ~ discussion.book.coverImage) }}" 
+                                     alt="{{ discussion.book.title }}" 
+                                     class="img-fluid mb-3">
+                            {% endif %}
+                            
+                            {% if discussion.book.author %}
+                                <p>
+                                    <strong>Author:</strong> 
+                                    {{ discussion.book.author.firstName }} {{ discussion.book.author.lastName }}
+                                </p>
+                            {% endif %}
+                            
+                            {% if discussion.book.description %}
+                                <p>{{ discussion.book.description|length > 150 ? 
+                                      discussion.book.description|slice(0, 150) ~ '...' : 
+                                      discussion.book.description }}</p>
+                                
+                                <a href="{{ path('app_book_show', {'id': discussion.book.id}) }}" 
+                                   class="btn btn-sm btn-primary">
+                                    View Book Details
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <p>Book information not available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

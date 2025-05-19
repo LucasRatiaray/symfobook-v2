@@ -1,0 +1,42 @@
+App\Entity\User:
+  user_admin:
+    email: 'admin@library.com'
+    password: 'plainpassword'
+    roles: ['ROLE_ADMIN']
+    firstName: 'Admin'
+    lastName: 'User'
+  
+  user_john:
+    email: 'john@example.com'
+    password: 'plainpassword'
+    roles: ['ROLE_USER']
+    firstName: 'John'
+    lastName: 'Doe'
+  
+  user_jane:
+    email: 'jane@example.com'
+    password: 'plainpassword'
+    roles: ['ROLE_USER']
+    firstName: 'Jane'
+    lastName: 'Smith'
+  
+  user_alice:
+    email: 'alice@example.com'
+    password: 'plainpassword'
+    roles: ['ROLE_USER']
+    firstName: 'Alice'
+    lastName: 'Johnson'
+  
+  user_bob:
+    email: 'bob@example.com'
+    password: 'plainpassword'
+    roles: ['ROLE_USER']
+    firstName: 'Bob'
+    lastName: 'Brown'
+  
+  user_banned:
+    email: 'banned@example.com'
+    password: 'plainpassword'
+    roles: ['ROLE_BANNED']
+    firstName: 'Banned'
+    lastName: 'User'

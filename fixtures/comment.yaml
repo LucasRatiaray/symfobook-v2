@@ -1,0 +1,42 @@
+App\Entity\Comment:
+  comment_{1..20}:
+    content: '<paragraph(2)>'
+    createdAt: '<dateTime()>'
+    discussion: '@discussion_*'
+    user: '@user_*'
+  
+  comment_les_mis_1:
+    content: 'I think Jean Valjean represents the potential for redemption in everyone.'
+    createdAt: '<dateTime("-28 days")>'
+    discussion: '@discussion_les_mis_themes'
+    user: '@user_jane'
+  
+  comment_les_mis_2:
+    content: 'Javert''s strict adherence to the law without mercy creates an interesting contrast to Valjean''s compassion.'
+    createdAt: '<dateTime("-27 days")>'
+    discussion: '@discussion_les_mis_themes'
+    user: '@user_bob'
+  
+  comment_potter_1:
+    content: 'I''ve always been fascinated by how different spells require different movements and words.'
+    createdAt: '<dateTime("-14 days")>'
+    discussion: '@discussion_potter_magic'
+    user: '@user_john'
+  
+  comment_potter_2:
+    content: 'The restrictions on magic like not being able to create food from nothing are interesting limitations.'
+    createdAt: '<dateTime("-13 days")>'
+    discussion: '@discussion_potter_magic'
+    user: '@user_bob'
+  
+  comment_horror_1:
+    content: 'The psychological horror in The Shining is what makes it truly terrifying.'
+    createdAt: '<dateTime("-6 days")>'
+    discussion: '@discussion_horror_elements'
+    user: '@user_alice'
+  
+  comment_horror_2:
+    content: 'IT uses childhood fears as a way to create more personal horror for each character.'
+    createdAt: '<dateTime("-5 days")>'
+    discussion: '@discussion_horror_elements'
+    user: '@user_jane'

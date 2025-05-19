@@ -1,0 +1,72 @@
+App\Entity\Book:
+  book_les_mis:
+    title: 'Les Misérables'
+    description: 'A classic novel about French society and redemption'
+    pageCount: 1488
+    coverImage: 'les-miserables.jpg'
+    publishedAt: '<dateTime("1862-01-01")>'
+    author: '@author_hugo'
+    genres: ['@genre_fiction', '@genre_historical']
+  
+  book_lord_rings:
+    title: 'The Lord of the Rings'
+    description: 'Epic high-fantasy novel centered on the quest to destroy the One Ring'
+    pageCount: 1178
+    coverImage: 'lord-of-the-rings.jpg'
+    publishedAt: '<dateTime("1954-07-29")>'
+    author: '@author_tolkien'
+    genres: ['@genre_fantasy', '@genre_adventure']
+  
+  book_harry_potter:
+    title: 'Harry Potter and the Philosopher''s Stone'
+    description: 'Young wizard Harry Potter discovers his magical heritage'
+    pageCount: 223
+    coverImage: 'harry-potter.jpg'
+    publishedAt: '<dateTime("1997-06-26")>'
+    author: '@author_rowling'
+    genres: ['@genre_fantasy']
+  
+  book_shining:
+    title: 'The Shining'
+    description: 'A family heads to an isolated hotel where an evil presence influences the father'
+    pageCount: 447
+    coverImage: 'the-shining.jpg'
+    publishedAt: '<dateTime("1977-01-28")>'
+    author: '@author_king'
+    genres: ['@genre_horror']
+  
+  book_foundation:
+    title: 'Foundation'
+    description: 'A mathematician predicts the fall of civilization and works to preserve knowledge'
+    pageCount: 244
+    coverImage: 'foundation.jpg'
+    publishedAt: '<dateTime("1951-05-01")>'
+    author: '@author_asimov'
+    genres: ['@genre_scifi']
+  
+  book_pride_prejudice:
+    title: 'Pride and Prejudice'
+    description: 'A romantic novel about the Bennet daughters in 19th century England'
+    pageCount: 432
+    coverImage: 'pride-and-prejudice.jpg'
+    publishedAt: '<dateTime("1813-01-28")>'
+    author: '@author_austen'
+    genres: ['@genre_romance', '@genre_fiction']
+  
+  book_it:
+    title: 'IT'
+    description: 'A shape-shifting entity terrorizes the town of Derry, Maine'
+    pageCount: 1138
+    coverImage: 'it.jpg'
+    publishedAt: '<dateTime("1986-09-15")>'
+    author: '@author_king'
+    genres: ['@genre_horror']
+  
+  book_hobbit:
+    title: 'The Hobbit'
+    description: 'Bilbo Baggins is swept into an epic quest to reclaim the Dwarf Kingdom of Erebor'
+    pageCount: 310
+    coverImage: 'the-hobbit.jpg'
+    publishedAt: '<dateTime("1937-09-21")>'
+    author: '@author_tolkien'
+    genres: ['@genre_fantasy', '@genre_adventure']

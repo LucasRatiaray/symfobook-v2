@@ -1,0 +1,48 @@
+App\Entity\Genre:
+  genre_fiction:
+    name: 'Fiction'
+    description: 'Literary works based on imagination'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_fantasy:
+    name: 'Fantasy'
+    description: 'Fiction featuring magic and supernatural elements'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_scifi:
+    name: 'Science Fiction'
+    description: 'Fiction based on scientific discoveries and technology'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_horror:
+    name: 'Horror'
+    description: 'Fiction meant to scare or frighten'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_romance:
+    name: 'Romance'
+    description: 'Fiction centered on romantic relationships'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_mystery:
+    name: 'Mystery'
+    description: 'Fiction focused on solving a mystery, usually a crime'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_historical:
+    name: 'Historical Fiction'
+    description: 'Fiction set in the past with historical events'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'
+  
+  genre_adventure:
+    name: 'Adventure'
+    description: 'Fiction featuring exciting and unusual experiences'
+    createdAt: '<dateTime()>'
+    updatedAt: '<dateTime()>'

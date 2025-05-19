@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discussion index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">Discussions</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Book</th>
+                    <th>Content</th>
+                    <th>Comments</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for discussion in discussions %}
+                <tr>
+                    <td>{{ discussion.title }}</td>
+                    <td>
+                        {% if discussion.user %}
+                            <div>
+                                {{ discussion.user.firstName }} {{ discussion.user.lastName }}
+                            </div>
+                            <small class="text-muted">{{ discussion.user.email }}</small>
+                            {% if 'ROLE_ADMIN' in discussion.user.roles %}
+                                <span class="badge bg-danger">Admin</span>
+                            {% elseif 'ROLE_BANNED' in discussion.user.roles %}
+                                <span class="badge bg-warning">Banned</span>
+                            {% else %}
+                                <span class="badge bg-secondary">User</span>
+                            {% endif %}
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if discussion.book %}
+                            <a href="{{ path('app_book_show', {'id': discussion.book.id}) }}">
+                                {{ discussion.book.title }}
+                            </a>
+                            {% if discussion.book.author %}
+                                <br><small>by {{ discussion.book.author.firstName }} {{ discussion.book.author.lastName }}</small>
+                            {% endif %}
+                        {% else %}
+                            Unknown book
+                        {% endif %}
+                    </td>
+                    <td>{{ discussion.content|length > 50 ? discussion.content|slice(0, 50) ~ '...' : discussion.content }}</td>
+                    <td>
+                        <span class="badge bg-secondary">{{ discussion.comments|length }} comments</span>
+                    </td>
+                    <td>{{ discussion.createdAt ? discussion.createdAt|date('Y-m-d') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_discussion_show', {'id': discussion.id}) }}" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
