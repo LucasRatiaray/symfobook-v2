@@ -1,0 +1,53 @@
+<div class="navbar bg-base-200 shadow-sm">
+	<div class="navbar-start">
+		<div class="dropdown">
+			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
+				</svg>
+			</div>
+			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+				<li>
+					<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-neutral-content' : '' }}">Home</a>
+				</li>
+				<li>
+                    <a>Books</a>
+					{# <a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book' ? 'bg-neutral-content' : '' }}">Books</a> #}
+				</li>
+				<li>
+                    <a>Discussions</a>
+					{# <a href="{{ path('app_discussion') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion' ? 'bg-neutral-content' : '' }}">Discussions</a> #}
+				</li>
+			</ul>
+		</div>
+		<a href="{{ path('app_home') }}" class="btn btn-ghost text-xl">symfoBook</a>
+	</div>
+	<div class="navbar-center hidden lg:flex">
+		<ul class="menu menu-horizontal px-1">
+			<li>
+				<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-neutral-content' : '' }}">Home</a>
+			</li>
+			<li>
+                <a>Books</a>
+				{# <a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book' ? 'bg-neutral-content' : '' }}">Books</a> #}
+			</li>
+			<li>
+                <a>Discussions</a>
+				{# <a href="{{ path('app_discussion') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion' ? 'bg-neutral-content' : '' }}">Discussions</a> #}
+			</li>
+		</ul>
+	</div>
+	<div class="navbar-end flex gap-2">
+        <a>Login</a>
+		{# {% if app.user %}
+			{% if 'ROLE_ADMIN' in app.user.roles %}
+				<a href="{{ path('app_admin') }}" class="btn btn-success">Dashboard</a>
+			{% elseif 'ROLE_USER' in app.user.roles %}
+				<a href="{{ path('app_profile_show') }}" class="btn btn-primary">Profile</a>
+			{% endif %}
+			<a href="{{ path('app_logout') }}" class="btn btn-warning">Logout</a>
+		{% else %}
+			<a href="{{ path('app_login') }}" class="btn btn-info">Login</a>
+		{% endif %} #}
+	</div>
+</div>
