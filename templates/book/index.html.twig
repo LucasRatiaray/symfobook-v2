@@ -6,26 +6,29 @@
 {% block body %}
 	<h1 class="mt-4 text-xl font-semibold">Books</h1>
 
-	<div class="grid grid-cols-3 gap-4 py-4">
+	<div class="grid grid-cols-4 gap-4 py-4">
 		{% for book in books %}
-			<div class="card bg-base-100 w-96 shadow-sm">
-				<figure>
-					<img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes"/>
+			<div class="relative card bg-base-100 shadow-sm bg-neutral">
+				<div class="absolute -top-2 right-2 card-actions justify-center mt-4">
+					<a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-sm btn-secondary text-white">View</a>
+				</div>
+				<figure class="pt-6">
+					<img src="{{ book.coverImage }}" alt="Book cover" class="max-h-80 object-cover rounded-xl"/>
 				</figure>
 				<div class="card-body">
-					<h2 class="card-title">
-						{{ book.title }}
-						<div class="badge badge-secondary">
-							{% for genre in book.genres %}
-								{{ genre.name }}
-								{% if not loop.last %},
-								{% endif %}
-							{% endfor %}
-						</div>
-					</h2>
-					<p>{{ book.description|length > 70 ? book.description|slice(0, 70) ~ '...' : book.description }}</p>
-					<div class="card-actions justify-end">
-						<div class="badge badge-primary">
+					<div class="card-actions justify-center">
+						<h2 class="card-title text-2xl text-center">
+							{{ book.title }}
+						</h2>
+					</div>
+					<div class="card-actions justify-center">
+						{% for genre in book.genres %}
+							<div class="badge badge-accent">{{ genre.name }}</div>
+						{% endfor %}
+					</div>
+					<p class="my-4 text-justify">{{ book.description|length > 100 ? book.description|slice(0, 100) ~ '...' : book.description }}</p>
+					<div class="card-actions flex justify-center">
+						<div class="badge badge-outline">
 							{% if book.author %}
 								{{ book.author.firstName }}
 								{{ book.author.lastName }}
@@ -35,7 +38,6 @@
 						</div>
 						<div class="badge badge-outline">{{ book.publishedAt ? book.publishedAt|date('Y-m-d') : '' }}</div>
 					</div>
-					<a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-sm btn-info mt-2">View</a>
 				</div>
 			</div>
 		{% else %}

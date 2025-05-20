@@ -8,42 +8,42 @@
 			</div>
 			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
 				<li>
-					<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-neutral-content' : '' }}">Home</a>
+					<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-primary text-white' : '' }}">Home</a>
 				</li>
 				<li>
-					<a href="{{ path('app_book_index') }}" class="{% if app.request.get('_route') starts with 'app_book' %}bg-neutral-content{% endif %}">Books</a>
+					<a href="{{ path('app_book_index') }}" class="{% if app.request.get('_route') starts with 'app_book' %}bg-primary text-white{% endif %}">Books</a>
 				</li>
 				<li>
-					<a href="{{ path('app_discussion_index') }}" class="{% if app.request.get('_route') starts with 'app_discussion' %}bg-neutral-content{% endif %}">Discussions</a>
+					<a href="{{ path('app_discussion_index') }}" class="{% if app.request.get('_route') starts with 'app_discussion' %}bg-primary text-white{% endif %}">Discussions</a>
 				</li>
 			</ul>
 		</div>
-		<a href="{{ path('app_home') }}" class="btn btn-ghost text-xl">symfoBook</a>
+		<a href="{{ path('app_home') }}" class="btn bg-none text-xl">symfoBook</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal px-1 space-x-2">
 			<li>
-				<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'bg-neutral-content' : '' }}">Home</a>
+				<a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'btn btn-soft btn-secondary' : 'btn bg-none hover:bg-secondary hover:text-black' }}">Home</a>
 			</li>
 			<li>
-				<a href="{{ path('app_book_index') }}" class="{{ app.request.attributes.get('_route') == 'app_book_index' ? 'bg-neutral-content' : '' }}">Books</a>
+				<a href="{{ path('app_book_index') }}" class="{% if app.request.get('_route') starts with 'app_book' %}btn btn-soft btn-secondary{% endif %} btn bg-none hover:bg-secondary hover:text-black">Books</a>
 			</li>
 			<li>
-				<a href="{{ path('app_discussion_index') }}" class="{{ app.request.attributes.get('_route') == 'app_discussion_index' ? 'bg-neutral-content' : '' }}">Discussions</a>
+				<a href="{{ path('app_discussion_index') }}" class="{% if app.request.get('_route') starts with 'app_discussion' %}btn btn-soft btn-secondary{% endif %} btn bg-none hover:bg-secondary hover:text-black">Discussions</a>
 			</li>
 		</ul>
 	</div>
 	<div class="navbar-end flex gap-2">
 		{% if app.user %}
 			{% if 'ROLE_ADMIN' in app.user.roles %}
-				<a href="{{ path('app_admin') }}" class="btn btn-success">Dashboard</a>
+				<a href="{{ path('app_admin') }}" class="btn btn-soft btn-secondary">Dashboard</a>
 			{% elseif 'ROLE_USER' in app.user.roles %}
-				<a href="{{ path('app_profile_show') }}" class="btn btn-primary">Profile</a>
+				<a href="{{ path('app_profile_show') }}" class="btn btn-soft btn-secondaryy">Profile</a>
 			{% endif %}
-			<a href="{{ path('app_logout') }}" class="btn btn-warning">Logout</a>
+			<a href="{{ path('app_logout') }}" class="btn btn-error">Logout</a>
 		{% else %}
-			<a href="{{ path('app_login') }}" class="btn btn-info">Login</a>
-			<a href="{{ path('app_register') }}" class="btn btn-info">Sign</a>
+			<a href="{{ path('app_login') }}" class="btn btn-soft btn-warning">Login</a>
+			<a href="{{ path('app_register') }}" class="btn btn-soft btn-warning">Sign</a>
 		{% endif %}
 	</div>
 </div>

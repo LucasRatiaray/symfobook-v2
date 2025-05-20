@@ -14,47 +14,67 @@
 					<h1 class="text-5xl font-bold">Hello there</h1>
 				{% endif %}
 				<p class="py-6">
-					Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationemquasi. In deleniti eaque aut repudiandae et a id nisi.
+					Welcome to Symfobook, your platform to discover, share, and discuss your favorite books! Below, you'll find the 4 latest books added by our community.
 				</p>
 			</div>
-			<div class="stats shadow">
-				<div class="stat">
+			<div class="stats shadow bg-neutral">
+				<div class="stat place-items-start">
+					<div class="stat-figure text-primary">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" class="inline-block h-8 w-8 stroke-current">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
+						</svg>
+					</div>
 					<div class="stat-title">Total Books</div>
-					<div class="stat-value">{{ countBooks }}</div>
+					<div class="stat-value text-primary">{{ countBooks }}</div>
+					<div class="stat-desc">All time</div>
 				</div>
 
-				<div class="stat">
+				<div class="stat place-items-start">
+					<div class="stat-figure text-secondary">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" class="inline-block h-8 w-8 stroke-current">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
+						</svg>
+					</div>
 					<div class="stat-title">Total Users</div>
-					<div class="stat-value">{{ countUsers }}</div>
+					<div class="stat-value text-secondary">{{ countUsers }}</div>
+					<div class="stat-desc">All time</div>
 				</div>
 
-				<div class="stat">
-					<div class="stat-title">Total Discussions</div>
+				<div class="stat place-items-start">
+					<div class="stat-figure text-secondary">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" class="inline-block h-8 w-8 stroke-current">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+						</svg>
+					</div>
 					<div class="stat-value">{{ countDiscussions }}</div>
+					<div class="stat-title">Discussions</div>
+					<div class="stat-desc text-secondary">With
+						{{ countComments }}
+						comments</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="grid grid-cols-3 gap-4 py-4">
+		<div class="grid grid-cols-4 gap-4 py-4">
 			{% for latestBook in latestBooks %}
-				<div class="card bg-base-100 w-96 shadow-sm">
-					<figure>
-						<img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes"/>
+				<div class="relative card bg-base-100 shadow-sm bg-neutral">
+					<figure class="pt-6">
+						<img src="{{ latestBook.coverImage }}" alt="Book cover" class="max-h-80 object-cover rounded-xl"/>
 					</figure>
 					<div class="card-body">
-						<h2 class="card-title">
-							{{ latestBook.title }}
-							<div class="badge badge-secondary">
-								{% for genre in latestBook.genres %}
-									{{ genre.name }}
-									{% if not loop.last %},
-									{% endif %}
-								{% endfor %}
-							</div>
-						</h2>
-						<p>{{ latestBook.description|length > 70 ? latestBook.description|slice(0, 70) ~ '...' : latestBook.description }}</p>
-						<div class="card-actions justify-end">
-							<div class="badge badge-primary">{{ latestBook.author.firstName }}
+						<div class="card-actions justify-center">
+							<h2 class="card-title text-2xl text-center">
+								{{ latestBook.title }}
+							</h2>
+						</div>
+						<div class="card-actions justify-center">
+							{% for genre in latestBook.genres %}
+								<div class="badge badge-accent">{{ genre.name }}</div>
+							{% endfor %}
+						</div>
+						<p class="my-4 text-justify">{{ latestBook.description|length > 100 ? latestBook.description|slice(0, 100) ~ '...' : latestBook.description }}</p>
+						<div class="card-actions flex justify-center">
+							<div class="badge badge-outline">{{ latestBook.author.firstName }}
 								{{ latestBook.author.lastName }}</div>
 							<div class="badge badge-outline">{{ latestBook.publishedAt|date('Y-m-d') }}</div>
 						</div>
