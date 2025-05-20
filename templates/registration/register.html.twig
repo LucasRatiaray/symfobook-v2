@@ -1,25 +1,93 @@
 {% extends 'security/base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+	<div class="bg-neutral flex items-center justify-center min-h-screen">
+		<div class="card bg-base-100 w-full max-w-md shadow-lg">
+			<div class="card-body">
+				<h3 class="text-lg font-bold">Create your account</h3>
 
-    <h1>Register</h1>
+				{% for flash_error in app.flashes('verify_email_error') %}
+					<div class="alert alert-error mt-2" role="alert">{{ flash_error }}</div>
+				{% endfor %}
 
-    {{ form_errors(registrationForm) }}
+				{{ form_start(registrationForm, {'attr': {'class': 'mt-4'}}) }}
+				{% if form_errors(registrationForm) %}
+					<div class="alert alert-error mt-2">
+						{{ form_errors(registrationForm) }}
+					</div>
+				{% endif %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.firstName) }}
-        {{ form_row(registrationForm.lastName) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+				<fieldset class="fieldset">
+					<label for="{{ registrationForm.firstName.vars.id }}" class="label">First Name</label>
+					{{ form_widget(registrationForm.firstName, {
+                        'attr': {'class': 'input input-bordered w-full', 'placeholder': 'First Name'}
+                    }) }}
+					{% if registrationForm.firstName.vars.errors|length > 0 %}
+						<div class="text-error text-sm mt-1">
+							{{ form_errors(registrationForm.firstName) }}
+						</div>
+					{% endif %}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+					<label for="{{ registrationForm.lastName.vars.id }}" class="label">Last Name</label>
+					{{ form_widget(registrationForm.lastName, {
+                        'attr': {'class': 'input input-bordered w-full', 'placeholder': 'Last Name'}
+                    }) }}
+					{% if registrationForm.lastName.vars.errors|length > 0 %}
+						<div class="text-error text-sm mt-1">
+							{{ form_errors(registrationForm.lastName) }}
+						</div>
+					{% endif %}
+
+					<label for="{{ registrationForm.email.vars.id }}" class="label">Email</label>
+					{{ form_widget(registrationForm.email, {
+                        'attr': {'class': 'input input-bordered w-full', 'placeholder': 'Email', 'autocomplete': 'email'}
+                    }) }}
+					{% if registrationForm.email.vars.errors|length > 0 %}
+						<div class="text-error text-sm mt-1">
+							{{ form_errors(registrationForm.email) }}
+						</div>
+					{% endif %}
+
+					<label for="{{ registrationForm.plainPassword.vars.id }}" class="label">Password</label>
+					{{ form_widget(registrationForm.plainPassword, {
+                        'attr': {'class': 'input input-bordered w-full', 'placeholder': 'Password', 'autocomplete': 'new-password'}
+                    }) }}
+					{% if registrationForm.plainPassword.vars.errors|length > 0 %}
+						<div class="text-error text-sm mt-1">
+							{{ form_errors(registrationForm.plainPassword) }}
+						</div>
+					{% endif %}
+
+					<div class="flex items-center gap-2 mt-2">
+						{{ form_widget(registrationForm.agreeTerms, {
+                            'attr': {'class': 'checkbox'}
+                        }) }}
+						<label for="{{ registrationForm.agreeTerms.vars.id }}" class="label cursor-pointer">
+							I agree to the Terms of Service
+						</label>
+					</div>
+					{% if registrationForm.agreeTerms.vars.errors|length > 0 %}
+						<div class="text-error text-sm mt-1">
+							{{ form_errors(registrationForm.agreeTerms) }}
+						</div>
+					{% endif %}
+
+                    <div class="flex items-center mt-2 w-full gap-2">
+                        <button type="submit" class="btn btn-warning flex-1">Register</button>
+                        <a href="{{ path('app_home') }}" class="btn btn-soft btn-secondary flex-1">Back home</a>
+                    </div>
+
+					<div class="mt-4 text-center">
+						<p>Already have an account?
+							<a href="{{ path('app_login') }}" class="link link-hover">Login</a>
+						</p>
+					</div>
+				</fieldset>
+				{{ form_end(registrationForm) }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

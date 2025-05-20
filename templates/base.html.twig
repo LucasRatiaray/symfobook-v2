@@ -19,11 +19,74 @@
 	</head>
 
 	<body>
-		<!-- Navbar Menu -->
 		{% include 'parts/navbar.html.twig' %}
+
 		<div
 			class="container mx-auto">
 			<!-- Main Content -->
 			{% block body %}{% endblock %}
+		</div>
+
+		<dialog id="login_modal" class="modal backdrop-blur-sm">
+			<div class="modal-box">
+				<h3 class="text-lg font-bold">Login to your account</h3>
+
+				<form method="post" action="{{ path('app_login') }}" class="mt-4">
+					{% if app.flashes('error') is defined and app.flashes('error')|length > 0 %}
+						<div class="alert alert-error mt-2">
+							{% for message in app.flashes('error') %}
+								{{ message|trans({}, 'security') }}
+							{% endfor %}
+						</div>
+					{% endif %}
+					{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
+						<div class="alert alert-error mt-2">
+							{% for message in app.flashes('login_error') %}
+								{{ message|trans({}, 'security') }}
+							{% endfor %}
+						</div>
+					{% endif %}
+
+					<fieldset class="fieldset">
+						<label for="modal_username" class="label">Email</label>
+						<input type="email" value="{{ app.flashes('last_username')[0] is defined ? app.flashes('last_username')[0] : '' }}" name="_username" id="modal_username" class="input input-bordered w-full" placeholder="Email" autocomplete="email" required>
+
+						<label for="modal_password" class="label">Password</label>
+						<input type="password" name="_password" id="modal_password" class="input input-bordered w-full" placeholder="Password" autocomplete="current-password" required>
+
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<input type="hidden" name="_target_path" value="{{ app.request.uri }}">
+
+						<div class="flex items-center gap-2 mt-2">
+							<input type="checkbox" name="_remember_me" id="modal_remember_me" class="checkbox">
+							<label for="modal_remember_me" class="label cursor-pointer">Remember me</label>
+						</div>
+
+						<div class="mt-2">
+							<a href="{{ path('app_forgot_password_request') }}" class="link link-hover">Forgot password?</a>
+						</div>
+
+						<button class="mt-2 btn btn-warning" type="submit">Login</button>
+					</fieldset>
+				</form>
+			</div>
+		</dialog>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
+				login_modal.showModal();{% endif %}
+				});
+
+				const loginModal = document.getElementById('login_modal');
+				loginModal.addEventListener('click', function (event) {
+				if (event.target === loginModal) {
+				loginModal.close();
+				}
+				});
+
+				{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
+				login_modal.showModal();{% endif %}
+		</script>
 	</body>
 </html>

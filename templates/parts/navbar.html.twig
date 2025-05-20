@@ -42,7 +42,7 @@
 			{% endif %}
 			<a href="{{ path('app_logout') }}" class="btn btn-error">Logout</a>
 		{% else %}
-			<a href="{{ path('app_login') }}" class="btn btn-soft btn-warning">Login</a>
+			<button class="btn btn-soft btn-warning" onclick="login_modal.showModal()">Login</button>
 			<a href="{{ path('app_register') }}" class="btn btn-soft btn-warning">Sign</a>
 		{% endif %}
 	</div>

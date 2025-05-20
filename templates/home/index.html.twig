@@ -4,6 +4,16 @@
 {% endblock %}
 
 {% block body %}
+	<div class="toast toast-top toast-end">
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					<span>{{ message }}</span>
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+
 	<div class="bg-base-100 min-h-screen mt-16">
 		<div class="hero-content text-center flex justify-between">
 			<div class="max-w-md">
