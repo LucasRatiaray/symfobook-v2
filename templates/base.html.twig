@@ -21,15 +21,25 @@
 	<body>
 		{% include 'parts/navbar.html.twig' %}
 
+		<div class="toast toast-top toast-end z-50" id="flash-toast">
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}">
+						<span>{{ message }}</span>
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+
 		<div
-			class="container mx-auto">
+			class="container mx-auto sm:px-4 px-2 py-4 bg-base-100 min-h-screen">
 			<!-- Main Content -->
 			{% block body %}{% endblock %}
 		</div>
 
 		<dialog id="login_modal" class="modal backdrop-blur-sm">
 			<div class="modal-box">
-				<h3 class="text-lg font-bold">Login to your account</h3>
+				<h3 class="text-xl font-bold">Login to your account</h3>
 
 				<form method="post" action="{{ path('app_login') }}" class="mt-4">
 					{% if app.flashes('error') is defined and app.flashes('error')|length > 0 %}
@@ -74,19 +84,23 @@
 
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
-				{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
-				login_modal.showModal();{% endif %}
-				});
+			setTimeout(function () {
+				const toast = document.getElementById('flash-toast');
+				if (toast) 
+				toast.style.display = 'none';
+			}, 5000);
 
-				const loginModal = document.getElementById('login_modal');
+			{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
+			login_modal.showModal();{% endif %}
+			});
+
+			const loginModal = document.getElementById('login_modal');
 				loginModal.addEventListener('click', function (event) {
 				if (event.target === loginModal) {
 				loginModal.close();
-				}
-				});
-
-				{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
-				login_modal.showModal();{% endif %}
+			}
+			});{% if app.flashes('login_error') is defined and app.flashes('login_error')|length > 0 %}
+			login_modal.showModal();{% endif %}
 		</script>
 	</body>
 </html>

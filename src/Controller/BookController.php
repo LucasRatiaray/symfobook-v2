@@ -52,7 +52,7 @@ final class BookController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Your discussion has been created!');
-            return $this->redirectToRoute('app_discussion_show', ['id' => $discussion->getId()]);
+            return $this->redirectToRoute('app_book_show', ['id' => $book->getId()]);
         }
 
         return $this->render('book/show.html.twig', [

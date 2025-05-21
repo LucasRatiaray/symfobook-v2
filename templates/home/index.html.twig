@@ -4,16 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	<div class="toast toast-top toast-end">
-		{% for label, messages in app.flashes %}
-			{% for message in messages %}
-				<div class="alert alert-{{ label }}">
-					<span>{{ message }}</span>
-				</div>
-			{% endfor %}
-		{% endfor %}
-	</div>
-
 	<div class="bg-base-100 min-h-screen mt-16">
 		<div class="hero-content text-center flex justify-between">
 			<div class="max-w-md">
@@ -65,11 +55,11 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-4 gap-4 py-4">
+		<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 py-4">
 			{% for latestBook in latestBooks %}
 				<div class="relative card bg-base-100 shadow-sm bg-neutral">
 					<figure class="pt-6">
-						<img src="{{ latestBook.coverImage }}" alt="Book cover" class="max-h-80 object-cover rounded-xl"/>
+						<img src="{{ latestBook.coverImage }}" alt="Book cover" class="h-80 w-52 object-cover rounded-xl"/>
 					</figure>
 					<div class="card-body">
 						<div class="card-actions justify-center">
@@ -82,7 +72,7 @@
 								<div class="badge badge-accent">{{ genre.name }}</div>
 							{% endfor %}
 						</div>
-						<p class="my-4 text-justify">{{ latestBook.description|length > 100 ? latestBook.description|slice(0, 100) ~ '...' : latestBook.description }}</p>
+						<p class="my-4">{{ latestBook.description|length > 100 ? latestBook.description|slice(0, 100) ~ '...' : latestBook.description }}</p>
 						<div class="card-actions flex justify-center">
 							<div class="badge badge-outline">{{ latestBook.author.firstName }}
 								{{ latestBook.author.lastName }}</div>

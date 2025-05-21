@@ -8,79 +8,114 @@
 	<div class="row">
 		<div class="col-md-8">
 			<div class="">
-				<div class="hero-content flex-col lg:flex-row">
-					<img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp" class="max-w-sm rounded-lg shadow-2xl"/>
-					<div>
-						<h1 class="text-5xl font-bold">{{ book.title }}</h1>
-						<div class="py-6">
-							<dl class="row">
-								<dd class="col-sm-9">
-									<div class="badge badge-secondary">
-										{% for genre in book.genres %}
-											{{ genre.name }}
-											{% if not loop.last %},
-											{% endif %}
-										{% endfor %}
-									</div>
-								</dd>
-								<dd class="col-sm-9 my-4">{{ book.description }}</dd>
-								<div class="card-actions justify-end">
-									<div class="badge badge-primary">{{ book.author.firstName }}
-										{{ book.author.lastName }}</div>
-									<div class="badge badge-outline">{{ book.publishedAt|date('Y-m-d') }}</div>
-									<div class="badge badge-outline">Page Count : {{ book.pageCount }}</div>
-								</div>
-							</dl>
+				<div class="relative hero-content flex-col lg:justify-start lg:gap-8 lg:flex-row">
+					<div class="absolute top-2 right-4 mt-3">
+						<a href="{{ path('app_book_index') }}" class="btn btn-outline btn-secondary text-white">Back to list</a>
+					</div>
+					<figure>
+						<img src="{{ book.coverImage }}" alt="Book cover" class=" min-h-98 w-72 object-cover rounded-2xl"/>
+					</figure>
+					<div class="card-body">
+						<div class="card-actions justify-start">
+							<h2 class="card-title text-2xl text-center">
+								{{ book.title }}
+							</h2>
+						</div>
+						<div class="card-actions justify-start">
+							{% for genre in book.genres %}
+								<div class="badge badge-accent">{{ genre.name }}</div>
+							{% endfor %}
+						</div>
+						<p class="my-4">{{ book.description|length > 100 ? book.description|slice(0, 100) ~ '...' : book.description }}</p>
+						<div class="card-actions flex justify-start">
+							<div class="badge badge-outline">
+								{% if book.author %}
+									{{ book.author.firstName }}
+									{{ book.author.lastName }}
+								{% else %}
+									Unknown
+								{% endif %}
+							</div>
+							<div class="badge badge-outline">
+								{{ book.pageCount ? book.pageCount ~ ' pages' : '' }}
+							</div>
+							<div class="badge badge-outline">{{ book.publishedAt ? book.publishedAt|date('Y-m-d') : '' }}</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-            <h3 class="mt-4">Discussions</h3>
-            {% if book.discussions|length > 0 %}
-                <ul class="list bg-base-100 rounded-box shadow-md">
-                    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Latest discussions about this book</li>
-                    {% for discussion in book.discussions %}
-                        <li class="list-row flex gap-4 items-start py-4">
-                            <div>
-                                <img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/>
-                            </div>
-                            <div class="flex-1">
-                                <div class="font-semibold">
-                                    {{ discussion.user is defined and discussion.user ? discussion.user.firstName ~ ' ' ~ discussion.user.lastName : 'Unknown user' }}
-                                </div>
-                                <div class="text-xs uppercase font-semibold opacity-60">{{ discussion.title }}</div>
-                                <p class="list-col-wrap text-xs mt-1">
-                                    {{ discussion.content|length > 100 ? discussion.content|slice(0, 100) ~ '...' : discussion.content }}
-                                </p>
-                                <div class="flex gap-4 items-center mt-2">
-                                    <small class="opacity-60">{{ discussion.comments|length }} comments</small>
-                                    <small class="opacity-60">{{ discussion.createdAt ? discussion.createdAt|date('Y-m-d') : '' }}</small>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <a href="{{ path('app_discussion_show', {'id': discussion.id}) }}" class="btn btn-square btn-ghost" title="View">
-                                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
-                                </a>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No discussions yet. Be the first to start a discussion about this book!</p>
-            {% endif %}
+			<h3 class="p-4 text-xl font-semibold">Discussions</h3>
+			{% if book.discussions|length > 0 %}
+				<ul class="list bg-neutral rounded-box shadow-md">
+					<li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Latest discussions about this book</li>
+					{% for discussion in book.discussions %}
+						<li class="list-row flex gap-4 items-start py-4">
+							{% if app.user and discussion.user is defined and app.user.id == discussion.user.id %}
+								<div class="avatar avatar-placeholder">
+									<div class="bg-accent w-16 rounded-full">
+										<span class="text-xl text-white">
+											{{ (discussion.user.firstName|first)|upper }}{{ (discussion.user.lastName|first)|upper }}
+										</span>
+									</div>
+								</div>
+							{% else %}
+								<div class="avatar avatar-placeholder">
+									<div class="bg-base-200 text-neutral-content w-16 rounded-full">
+										<span class="text-xl">
+											{{ (discussion.user.firstName|first)|upper }}{{ (discussion.user.lastName|first)|upper }}
+										</span>
+									</div>
+								</div>
+							{% endif %}
+							<div class="flex-1">
+								<div class="font-semibold">
+									{{ discussion.user is defined and discussion.user ? discussion.user.firstName ~ ' ' ~ discussion.user.lastName : 'Unknown user' }}
+								</div>
+								<div class="text-xs uppercase font-semibold opacity-60">{{ discussion.title }}</div>
+								<p class="list-col-wrap text-xs mt-1">
+									{{ discussion.content|length > 100 ? discussion.content|slice(0, 100) ~ '...' : discussion.content }}
+								</p>
+								<div class="flex gap-4 items-center mt-2">
+									<small class="opacity-60">
+										{{ discussion.comments|length == 1 ? '1 comment' : (discussion.comments|length == 0 ? '0 comment' : discussion.comments|length ~ ' comments') }}
+									</small>
+									<small class="opacity-60">{{ discussion.createdAt ? discussion.createdAt|date('Y-m-d') : '' }}</small>
+								</div>
+							</div>
+							<div class="flex flex-col gap-2">
+								<a href="{{ path('app_discussion_show', {'id': discussion.id}) }}" class="btn btn-square btn-ghost" title="View">
+									<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+										<g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+											<path d="M6 3L20 12 6 21 6 3z"></path>
+										</g>
+									</svg>
+								</a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p>No discussions yet. Be the first to start a discussion about this book!</p>
+			{% endif %}
 
 			<div class="card mt-4">
-				<div class="card-header">
-					<h5 class="mb-0">Start a new discussion</h5>
-				</div>
-				<div class="card-body">
+				<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+					<legend class="fieldset-legend text-xl">Start a new discussion</legend>
 					{% if app.user %}
 						{% if not is_granted('ROLE_BANNED') %}
 							{{ form_start(discussionForm) }}
-							{{ form_widget(discussionForm) }}
-							<div class="mt-3">
-								<button type="submit" class="btn btn-primary">Submit</button>
+							<div class="flex flex-col">
+								<label class="label text-sm mb-2" for="{{ discussionForm.title.vars.id }}">Title</label>
+								{{ form_widget(discussionForm.title, {'attr': {'class': 'input mb-4', 'placeholder': 'Discussion title'}}) }}
+							</div>
+
+							<div class="flex flex-col">
+								<label class="label text-sm mb-2" for="{{ discussionForm.content.vars.id }}">Content</label>
+								{{ form_widget(discussionForm.content, {'attr': {'class': 'input mb-4 pt-2 w-96 h-64', 'placeholder': 'Your message'}}) }}
+							</div>
+							<div>
+								<button type="submit" class="btn btn-warning">Submit</button>
 							</div>
 							{{ form_end(discussionForm) }}
 						{% else %}
@@ -90,7 +125,7 @@
 						{% endif %}
 					{% else %}
 						<div role="alert" class="alert alert-info">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 							</svg>
 							<span>
@@ -100,11 +135,7 @@
 							</span>
 						</div>
 					{% endif %}
-				</div>
-			</div>
-
-			<div class="my-3">
-				<a href="{{ path('app_book_index') }}" class="btn btn-secondary">Back to list</a>
+				</fieldset>
 			</div>
 		</div>
 	</div>
